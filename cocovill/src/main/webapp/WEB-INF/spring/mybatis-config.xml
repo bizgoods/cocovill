@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+
+<configuration>
+	<mappers>
+
+
+		<mapper resource ="/sql/user.xml"/>
+		<mapper resource ="/sql/uploadSheet.xml"/>
+		<mapper resource ="/sql/alterword.xml"/>
+		<mapper resource ="/sql/gift.xml"/>
+		<mapper resource ="/sql/ordersheet.xml"/>
+		<mapper resource ="/sql/orderHistory.xml"/>
+		
+	</mappers>
+</configuration>

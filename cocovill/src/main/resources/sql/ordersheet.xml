@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "ordersheet">
+
+	<select id ="ordersheetList" parameterType="com.cocovill.order.dto.UploadSheetDto" resultType="com.cocovill.order.dto.UploadSheetDto">
+		/* listQuery 리스트 쿼리 */
+		SELECT
+			GROUP_CONCAT(DISTINCT uploadsheet_site SEPARATOR ',') g_uploadsheet_site
+			, max(uploadsheet_group) uploadsheet_group
+			, GROUP_CONCAT(uploadsheet_id SEPARATOR ',') g_uploadsheet_id
+			, max(suchwi_name) suchwi_name
+			, GROUP_CONCAT(concat(option_nick, ' ', suryang, '팩') SEPARATOR '+') as g_jumun_sang_name
+			, 1 as g_suryang
+			, suchwi_address
+			, suchwi_tel1
+			, suchwi_tel2
+			, suchwi_zip
+			, saeun_yn
+			, beasong_message
+		FROM t_uploadsheet
+		where hwak_yn = 'N'
+		group by suchwi_address
+	</select>	
+	
+	<update id="ordersheetListHwakjeong" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* ordersheet.ordersheetListhwakjeong 확정 */
+		update t_uploadsheet 
+			set
+			hwak_yn = 'Y'
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where uploadsheet_group = #{uploadsheet_group}
+	</update>
+	
+	<delete id="ordersheetListDelete" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* ordersheet.ordersheetDelete */
+		delete from t_uploadsheet 
+		where uploadsheet_group = #{uploadsheet_group}
+	</delete>
+	
+	<select id ="ordersheetDetailList" parameterType="com.cocovill.order.dto.UploadSheetDto" resultType="com.cocovill.order.dto.UploadSheetDto">
+		/* ordersheet.ordersheetDetail */
+		SELECT
+			uploadsheet_id
+			, uploadsheet_group
+			, uploadsheet_site
+			, sunseo
+			, mall_name
+			, jumun_date
+			, sujip_date
+			, sabang_sang_code
+			, sabang_jumun_num
+			, sujip_sang_name
+			, sujip_option
+			, hwak_sang_name
+			, hwak_option
+			, sang_yak
+			, option_nick
+			, suryang
+			, hwak_suryang
+			, jumun_name
+			, jumun_tel1
+			, jumun_tel2
+			, suchwi_name
+			, suchwi_tel1
+			, suchwi_tel2
+			, suchwi_zip
+			, suchwi_address
+			, beasong_message
+			, beasong_gubun
+			, beasong_pay
+			, panmae_price
+			, gongeup_price
+			, gyeolje_price
+			, taekbaesa
+			, songjang_num
+			, saeun_yn
+			, hwak_yn
+			, del_yn
+			, in_date
+			, in_user
+			, in_ip
+			, up_date
+			, up_user
+			, up_ip
+		FROM t_uploadsheet
+		where uploadsheet_group = #{uploadsheet_group }
+		and suchwi_address = #{suchwi_address }
+		order by uploadsheet_id
+	</select>
+	
+	
+	<insert id ="ordersheetInsertGift" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* sample.uploadSheet.uploadSheetInsert */
+		insert into t_uploadsheet( 
+			uploadsheet_group
+			, uploadsheet_site
+			, sunseo
+			, mall_name
+			, jumun_date
+			, sujip_date
+			, sabang_sang_code
+			, sabang_jumun_num
+			, sujip_sang_name
+			, sujip_option
+			, hwak_sang_name
+			, hwak_option
+			, sang_yak
+			, option_nick
+			, suryang
+			, hwak_suryang
+			, jumun_name
+			, jumun_tel1
+			, jumun_tel2
+			, suchwi_name
+			, suchwi_tel1
+			, suchwi_tel2
+			, suchwi_zip
+			, suchwi_address
+			, beasong_message
+			, beasong_gubun
+			, beasong_pay
+			, panmae_price
+			, gongeup_price
+			, gyeolje_price
+			, taekbaesa
+			, songjang_num
+			, saeun_yn
+			, in_date
+			, in_user
+			, in_ip
+		) values ( 
+			  trim(#{uploadsheet_group}     )
+			, trim(#{uploadsheet_site}     )
+			, trim(#{sunseo}          )
+			, trim(#{mall_name}       )
+			, trim(#{jumun_date}      )
+			, trim(#{sujip_date}      )
+			, trim(#{sabang_sang_code})
+			, trim(#{sabang_jumun_num})
+			, trim(#{sujip_sang_name} )
+			, trim(#{sujip_option}    )
+			, trim(#{hwak_sang_name}  )
+			, trim(#{hwak_option}     )
+			, trim(#{sang_yak}        )
+			, trim(#{option_nick}     )
+			, trim(#{suryang}         )
+			, trim(#{hwak_suryang}    )
+			, trim(#{jumun_name}      )
+			, trim(#{jumun_tel1}      )
+			, trim(#{jumun_tel2}      )
+			, trim(#{suchwi_name}     )
+			, trim(#{suchwi_tel1}     )
+			, trim(#{suchwi_tel2}     )
+			, trim(#{suchwi_zip}      )
+			, trim(#{suchwi_address}  )
+			, trim(#{beasong_message} )
+			, trim(#{beasong_gubun}   )
+			, trim(#{beasong_pay}     )
+			, trim(#{panmae_price}    )
+			, trim(#{gongeup_price}   )
+			, trim(#{gyeolje_price}   )
+			, trim(#{taekbaesa}       )
+			, trim(#{songjang_num}    )
+			, 'Y'
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			)
+	</insert>
+	
+	<update id="ordersheetUpdateGift" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* ordersheet.ordersheetUpdate */
+		update t_uploadsheet 
+			set
+			sujip_sang_name = trim(#{sujip_sang_name } )
+			, option_nick = trim(#{option_nick } )
+			, suryang = trim(#{suryang } )
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where uploadsheet_id = #{uploadsheet_id}
+	</update>
+	
+	<update id="ordersheetDeleteGift" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* ordersheet.ordersheetDeleteGift */
+		delete from t_uploadsheet 
+		where uploadsheet_id = #{uploadsheet_id}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<update id="ordersheetUpdate" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* ordersheet.ordersheetUpdate */
+		update t_uploadsheet 
+			set
+			hwak_yn = 'Y'
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where uploadsheet_group = #{uploadsheet_group}
+	</update>
+
+	<delete id="ordersheetDelete" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* ordersheet.ordersheetDelete */
+		delete from t_uploadsheet 
+		where uploadsheet_group = #{uploadsheet_group}
+	</delete>
+	
+	<select id ="autoSeq" resultType="String" parameterType="HashMap">
+		/* autoSeq */
+		SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES
+		 WHERE TABLE_SCHEMA = #{tableSC}
+		 AND TABLE_NAME = #{tableNM}
+	</select>
+	
+</mapper>

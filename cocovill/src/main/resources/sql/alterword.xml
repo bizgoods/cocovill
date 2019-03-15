@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "alterword">
+
+
+	<select id ="alterwordList" parameterType="com.cocovill.order.dto.AlterwordDto" resultType="com.cocovill.order.dto.AlterwordDto">
+		/* alterword.alterwordList */
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listQuery"/>
+						
+						order by alt.alterword_id desc
+						
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+		order by alterword_id desc
+	</select>
+	
+	
+	<sql id="listQuery">
+		/*	listQuery 리스트 쿼리	*/
+		select
+			alt.alterword_id
+			, alt.real_sang_name
+			, alt.alater_sang_name
+			, alt.use_yn
+			, alt.in_date
+			, alt.in_user
+			, alt.in_ip 
+		from t_alterword alt
+		where 1=1
+		<if test="searchValue != null and searchValue != ''">
+		and (alt.real_sang_name like CONCAT('%', #{searchValue}, '%') or alt.alater_sang_name like CONCAT('%', #{searchValue}, '%'))
+		</if>
+	</sql>	
+	
+	
+	<select id ="alterwordDetail" parameterType="com.cocovill.order.dto.AlterwordDto" resultType="com.cocovill.order.dto.AlterwordDto">
+		/* alterword.alterwordDetail */
+		select
+			alterword_id
+			, real_sang_name
+			, alater_sang_name
+			, use_yn
+		from t_alterword
+		where alterword_id = #{alterword_id}
+	</select>
+	
+	
+	<insert id ="alterwordInsert" parameterType="com.cocovill.order.dto.AlterwordDto">
+		/* alterword.alterwordInsert */
+		insert into t_alterword( 
+			real_sang_name
+			, alater_sang_name
+			, use_yn
+			, in_date
+			, in_user
+			, in_ip 
+		) values ( 
+			trim(#{real_sang_name})
+			, trim(#{alater_sang_name})
+			, #{use_yn}
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			)
+	</insert>
+	
+	
+	<update id="alterwordUpdate" parameterType="com.cocovill.order.dto.AlterwordDto">
+		/* alterword.alterwordUpdate */
+		update t_alterword 
+			set
+			real_sang_name = trim(#{real_sang_name})
+			, alater_sang_name = trim(#{alater_sang_name})
+			, use_yn = #{use_yn}
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where alterword_id = #{alterword_id}
+	</update>
+
+
+	<delete id="alterwordDelete" parameterType="com.cocovill.order.dto.AlterwordDto">
+		/* alterword.alterwordDelete */
+		delete from t_alterword
+		where alterword_id = #{alterword_id}
+	</delete>
+	
+	
+	<select id ="autoSeq" resultType="String" parameterType="HashMap">
+		/* autoSeq */
+		SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES
+		 WHERE TABLE_SCHEMA = #{tableSC}
+		 AND TABLE_NAME = #{tableNM}
+	</select>
+	
+</mapper>

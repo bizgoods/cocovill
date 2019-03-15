@@ -1,0 +1,19 @@
+drop table t_gift;
+
+/*	사은품관리	*/
+
+CREATE TABLE `t_gift` (
+			`gift_id` int(10) NOT NULL AUTO_INCREMENT,
+			`sang_name` varchar(300) COMMENT '상품명',
+			`sang_option` varchar(300) COMMENT '옵션명',
+			`use_yn` char(1) DEFAULT 'Y', 
+			`in_date` datetime DEFAULT NULL,
+			`in_user` varchar(50) DEFAULT NULL, 
+			`in_ip` varchar(20) DEFAULT NULL, 
+			`up_date` datetime DEFAULT NULL,
+			`up_user` varchar(50) DEFAULT NULL, 
+			`up_ip` varchar(20) DEFAULT NULL,
+			PRIMARY KEY (`gift_id`)
+) DEFAULT CHARSET=utf8;
+
+INSERT INTO t_gift (sang_name, sang_option) VALUES ('사은품상품', '사은품옵션');

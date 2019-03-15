@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "orderHistory">
+
+
+	<select id ="orderHistoryList" parameterType="com.cocovill.order.dto.OrderHistoryDto" resultType="com.cocovill.order.dto.OrderHistoryDto">
+		/* orderHistory.orderHistoryList */
+		select
+			orderHistory_id
+			, uploadsheet_site
+			, uploadsheet_group
+			, uploadsheet_id
+			, suchwi_name
+			, jumun_sang_name
+			, suryang
+			, suchwi_address
+			, suchwi_tel1
+			, suchwi_tel2
+			, suchwi_zip
+			, beasong_message
+			, in_date
+			, in_user
+			, in_ip
+		from t_orderHistory
+		where uploadsheet_group = #{uploadsheet_group }
+		<if test="searchValue != null and searchValue != ''">
+		and (
+			jumun_sang_name like CONCAT('%', #{searchValue}, '%') 
+			or uploadsheet_site like CONCAT('%', #{searchValue}, '%') 
+			or suchwi_name like CONCAT('%', #{searchValue}, '%') 
+			or suchwi_address like CONCAT('%', #{searchValue}, '%')
+		)
+		order by orderHistory_id
+		</if>
+	</select>
+	
+	
+	
+	<select id ="orderHistoryGourp" resultType="com.cocovill.order.dto.OrderHistoryDto">
+		/* orderHistory.orderHistoryGourp */
+		select uploadsheet_group
+		from t_orderHistory
+		group by uploadsheet_group
+		order by uploadsheet_group desc
+	</select>
+	
+	<insert id ="orderHistoryInsert" parameterType="com.cocovill.order.dto.OrderHistoryDto">
+		/* orderHistory.orderHistoryInsert */
+		insert into t_orderHistory( 
+			uploadsheet_site
+			, uploadsheet_group
+			, uploadsheet_id
+			, suchwi_name
+			, jumun_sang_name
+			, suryang
+			, suchwi_address
+			, suchwi_tel1
+			, suchwi_tel2
+			, suchwi_zip
+			, beasong_message
+			, in_date
+			, in_user
+			, in_ip
+		) values ( 
+			trim(#{uploadsheet_site})
+			, trim(#{uploadsheet_group})
+			, trim(#{uploadsheet_id})
+			, trim(#{suchwi_name})
+			, trim(#{jumun_sang_name})
+			, trim(#{suryang})
+			, trim(#{suchwi_address})
+			, trim(#{suchwi_tel1})
+			, trim(#{suchwi_tel2})
+			, trim(#{suchwi_zip})
+			, trim(#{beasong_message})
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+		)
+	</insert>
+	
+	
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "gift">
+
+
+	<select id ="giftList" parameterType="com.cocovill.order.dto.GiftDto" resultType="com.cocovill.order.dto.GiftDto">
+		/* gift.giftList */
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listQuery"/>
+						
+						order by gif.gift_id desc
+						
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+		order by gift_id desc
+	</select>
+	
+	
+	<sql id="listQuery">
+		/*	listQuery 리스트 쿼리	*/
+		select
+			gif.gift_id
+			, gif.sang_name
+			, gif.sang_option
+			, gif.use_yn
+			, gif.in_date
+			, gif.in_user
+			, gif.in_ip 
+		from t_gift gif
+		where 1=1
+		<if test="searchValue != null and searchValue != ''">
+		and (gif.sang_name like CONCAT('%', #{searchValue}, '%') or gif.sang_option like CONCAT('%', #{searchValue}, '%'))
+		</if>
+	</sql>	
+	
+	
+	<select id ="giftDetail" parameterType="com.cocovill.order.dto.GiftDto" resultType="com.cocovill.order.dto.GiftDto">
+		/* gift.giftDetail */
+		select
+			gift_id
+			, sang_name
+			, sang_option
+			, use_yn
+		from t_gift
+		where gift_id = #{gift_id}
+	</select>
+	
+	
+	<insert id ="giftInsert" parameterType="com.cocovill.order.dto.GiftDto">
+		/* gift.giftInsert */
+		insert into t_gift( 
+			sang_name
+			, sang_option
+			, use_yn
+			, in_date
+			, in_user
+			, in_ip 
+		) values ( 
+			trim(#{sang_name})
+			, trim(#{sang_option})
+			, #{use_yn}
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			)
+	</insert>
+	
+	
+	<update id="giftUpdate" parameterType="com.cocovill.order.dto.GiftDto">
+		/* gift.giftUpdate */
+		update t_gift 
+			set
+			sang_name = trim(#{sang_name})
+			, sang_option = trim(#{sang_option})
+			, use_yn = #{use_yn}
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where gift_id = #{gift_id}
+	</update>
+
+
+	<delete id="giftDelete" parameterType="com.cocovill.order.dto.GiftDto">
+		/* gift.giftDelete */
+		delete from t_gift
+		where gift_id = #{gift_id}
+	</delete>
+	
+	
+	<select id ="autoSeq" resultType="String" parameterType="HashMap">
+		/* autoSeq */
+		SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES
+		 WHERE TABLE_SCHEMA = #{tableSC}
+		 AND TABLE_NAME = #{tableNM}
+	</select>
+	
+	<select id ="giftAllList" parameterType="com.cocovill.order.dto.GiftDto" resultType="com.cocovill.order.dto.GiftDto">
+		/* gift.giftAllList */
+		select
+			gift_id
+			, sang_name
+			, sang_option
+			, use_yn
+			, in_date
+			, in_user
+			, in_ip 
+		from t_gift
+		where use_yn = 'Y'
+		order by sang_name
+	</select>
+	
+</mapper>

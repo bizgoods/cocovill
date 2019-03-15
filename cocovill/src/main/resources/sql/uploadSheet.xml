@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "uploadSheet">
+
+	<select id ="autoSeq" resultType="String" parameterType="HashMap">
+		/* sample.autoSeq */
+		SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES
+		 WHERE TABLE_SCHEMA = #{tableSC}
+		 AND TABLE_NAME = #{tableNM}
+	</select>
+
+	<select id ="uploadSheetSelectOrderGroup" resultType="string">
+		/* uploadSheet.uploadSheetSelectOrderGroup 그룹 시퀀스용으로 사용*/
+		SELECT COALESCE(max(uploadsheet_group) + 1, 1) uploadsheet_group FROM t_uploadsheet WHERE DEL_YN = 'N' AND hwak_yn = 'Y'
+	</select>
+	
+	<insert id ="uploadSheetInsert" parameterType="com.cocovill.order.dto.UploadSheetDto">
+		/* sample.uploadSheet.uploadSheetInsert */
+		insert into t_uploadsheet( 
+			uploadsheet_group
+			, uploadsheet_site
+			, sunseo
+			, mall_name
+			, jumun_date
+			, sujip_date
+			, sabang_sang_code
+			, sabang_jumun_num
+			, sujip_sang_name
+			, sujip_option
+			, hwak_sang_name
+			, hwak_option
+			, sang_yak
+			, option_nick
+			, suryang
+			, hwak_suryang
+			, jumun_name
+			, jumun_tel1
+			, jumun_tel2
+			, suchwi_name
+			, suchwi_tel1
+			, suchwi_tel2
+			, suchwi_zip
+			, suchwi_address
+			, beasong_message
+			, beasong_gubun
+			, beasong_pay
+			, panmae_price
+			, gongeup_price
+			, gyeolje_price
+			, taekbaesa
+			, songjang_num
+			, in_date
+			, in_user
+			, in_ip
+		) values ( 
+			  trim(#{uploadsheet_group}     )
+			, trim(#{uploadsheet_site}     )
+			, trim(#{sunseo}          )
+			, trim(#{mall_name}       )
+			, trim(#{jumun_date}      )
+			, trim(#{sujip_date}      )
+			, trim(#{sabang_sang_code})
+			, trim(#{sabang_jumun_num})
+			, trim(#{sujip_sang_name} )
+			, trim(#{sujip_option}    )
+			, trim(#{hwak_sang_name}  )
+			, trim(#{hwak_option}     )
+			, trim(#{sang_yak}        )
+			, trim(#{option_nick}     )
+			, trim(#{suryang}         )
+			, trim(#{hwak_suryang}    )
+			, trim(#{jumun_name}      )
+			, trim(#{jumun_tel1}      )
+			, trim(#{jumun_tel2}      )
+			, trim(#{suchwi_name}     )
+			, trim(#{suchwi_tel1}     )
+			, trim(#{suchwi_tel2}     )
+			, trim(#{suchwi_zip}      )
+			, trim(#{suchwi_address}  )
+			, trim(#{beasong_message} )
+			, trim(#{beasong_gubun}   )
+			, trim(#{beasong_pay}     )
+			, trim(#{panmae_price}    )
+			, trim(#{gongeup_price}   )
+			, trim(#{gyeolje_price}   )
+			, trim(#{taekbaesa}       )
+			, trim(#{songjang_num}    )
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			)
+	</insert>
+	
+	
+</mapper>

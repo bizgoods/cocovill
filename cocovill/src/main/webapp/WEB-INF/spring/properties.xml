@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+<properties>
+
+	<comment>프로퍼티</comment>
+
+<!--S: 로컬|서버 구분해서 해야함 -->
+	<!-- DB 스키마명 -->
+	<!-- 서버 -->
+	<entry key="TABLESC">ryan</entry>
+
+	<entry key="alertSaveOk">저장되었습니다.</entry>
+	<entry key="alertFail">일시적인 오류입니다. 관리자에게 문의 하세요</entry>
+
+	<!-- 테이블 명 -->
+	<entry key="TABLE_T_BOARD">t_board</entry>
+	<entry key="TABLE_T_BOOTSTRAP">t_bootstrap</entry>
+	<entry key="TABLE_T_ORDER_GROUP">t_order_group</entry>
+	
+	<entry key="ADMIN_ID">admin</entry>
+	
+	<!-- 페이징 -->
+	<entry key="PAGENUM">1</entry>
+	<entry key="PAGESIZE_10">10</entry>
+	<entry key="PAGESIZE_20">20</entry>
+	<entry key="BLOCKSIZE_10">10</entry>	
+	<entry key="BLOCKSIZE_20">20</entry>
+	
+	<!--  상태코드 -->
+	<entry key="STATUS_S_CODE">0000</entry>
+	<entry key="STATUS_S_MSG">성공</entry>
+	<entry key="STATUS_F_CODE">9999</entry>
+	<entry key="STATUS_F_MSG">실패</entry>
+	
+	<!-- 업로드사이트명 -->
+	<entry key="SITE_SABANG">사방넷</entry>
+	<entry key="SITE_DAIET">다이어트신</entry>
+	<entry key="SITE_FOOD">푸드나무(랭킹닭컴)</entry>
+	<entry key="SITE_DOSIRAK">도시락몰</entry>
+	<entry key="SITE_POST">우체국몰</entry>
+	<entry key="SITE_EJE">이제너두</entry>
+	<entry key="SITE_PINK">핑크다이어리</entry>
+	<entry key="SITE_SPO">스포맥스</entry>
+	<entry key="SITE_FUN">펀샵</entry>
+	<entry key="SITE_FRESH">프레시로드</entry>
+	<entry key="SITE_FITN">피트니스스토어</entry>
+	<entry key="SITE_THENE">더네베푸드</entry>
+	<entry key="SITE_MONSTER">몬스터짐</entry>
+	<entry key="SITE_THIS">디스피스(케어니스)</entry>
+	<entry key="SITE_RNR">알앤알(이홈데코)</entry>
+	<entry key="SITE_NAMSEON">남선지티엘</entry>
+	<entry key="SITE_KAKAO">카카오</entry>
+	<entry key="SITE_SELF">자사몰</entry>
+	
+</properties>

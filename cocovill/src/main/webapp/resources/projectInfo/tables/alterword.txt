@@ -1,0 +1,20 @@
+drop table t_alterword;
+
+/*	대체어관리	*/
+
+CREATE TABLE `t_alterword` (
+			`alterword_id` int(10) NOT NULL AUTO_INCREMENT,
+			`real_sang_name` varchar(300) COMMENT '실제 상품명',
+			`alater_sang_name` varchar(300) COMMENT '대체 상품명',
+			`use_yn` char(1) DEFAULT 'Y', 
+			`in_date` datetime DEFAULT NULL,
+			`in_user` varchar(50) DEFAULT NULL, 
+			`in_ip` varchar(20) DEFAULT NULL, 
+			`up_date` datetime DEFAULT NULL,
+			`up_user` varchar(50) DEFAULT NULL, 
+			`up_ip` varchar(20) DEFAULT NULL,
+			PRIMARY KEY (`alterword_id`)
+) DEFAULT CHARSET=utf8;
+
+INSERT INTO t_alterword (real_sang_name, alater_sang_name) VALUES ('진짜상품명', '대체상품명');
+  

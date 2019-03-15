@@ -1,0 +1,21 @@
+drop table t_orderHistory;
+
+CREATE TABLE `t_orderHistory` (
+			`orderHistory_id` int(10) NOT NULL AUTO_INCREMENT,
+			`uploadsheet_site` varchar(200) COMMENT '업로드사이트',
+			`uploadsheet_group` int(5) COMMENT '업로드그룹',
+			`uploadsheet_id` varchar(200) COMMENT '업로드그룹',
+			`suchwi_name` varchar(100) COMMENT '수취인명',
+			`jumun_sang_name` varchar(1000) DEFAULT NULL COMMENT '주문제품명',
+			`suryang` varchar(10) COMMENT '수량',
+			`suchwi_address` varchar(300) COMMENT '수취인주소',
+			`suchwi_tel1` varchar(50) COMMENT '수취인전화번호1',
+			`suchwi_tel2` varchar(50) COMMENT '수취인전화번호2',
+			`suchwi_zip` varchar(20) COMMENT '수취인우편번호',
+			`beasong_message` varchar(500) COMMENT '배송메세지',
+			`in_date` datetime DEFAULT NULL,
+			`in_user` varchar(50) DEFAULT NULL, 
+			`in_ip` varchar(20) DEFAULT NULL,
+			PRIMARY KEY (`orderHistory_id`)
+) DEFAULT CHARSET=utf8;
+

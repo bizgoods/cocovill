@@ -1,0 +1,8 @@
+/*==============================================
+    Custom  STYLES    
+    =============================================*/
+
+table tbody tr th{text-align: right; margin-right: 1em; white-space: nowrap;}
+table tbody tr td{text-align: left; margin-left: 1em; white-space: nowrap;}
+
+.table_size_scroll_01{width: 100%;height: 700px;overflow: auto;}
